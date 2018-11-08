@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding:0;
+            margin: 0;
+            list-style: none;
+            border:0;
+        }
+        .all{
+            width: 500px;
+            height: 200px;
+            padding:7px;
+            border:1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+        .screen{
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .screen ul li{
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float:left;
+        }
+        .screen ul{
+            position: absolute;
+            left:0;
+            top:0;
+            width:2500px;
+        }
+        .screen ol{
+            position: absolute;
+            right: 30px;
+            bottom: 20px;
+        }
+
+        ol li{
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            border-radius: 15px;
+            float: left;
+            margin-left: 20px;
+            background: white;
+            line-height: 20px;
+            text-align: center;
+        }
+        ol li.now{
+            background: yellow;
+        }
+        #arr{
+            display: none;
+            transition: all .2s;
+        }
+        #arr div{
+            width: 30px;
+            height: 60px;
+            position: absolute;
+            top:50%;
+            background: rgba(225,225,225,0.3);
+            transform: translatey(-50%);
+            transition: all  .8s;
+        }
+        #arr .pre{
+            left: 7px;
+        }
+
+        #arr .next{
+            right: 7px;
+        }
+        #box:hover #arr{
+            display: block;
+            transition: all .8s;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="all" id="box">
+    <div class="screen"  id="screen">
+        <ul   id="yi">
+            <li><img src="images/1.jpg" alt="" style="width: 500px;height: 200px;"></li>
+            <li><img src="images/2.jpg" alt="" style="width: 500px;height: 200px;"></li>
+            <li><img src="images/3.jpg" alt=""  style="width: 500px;height: 200px;"></li>
+            <li><img src="images/4.jpg" alt="" style="width: 500px;height: 200px;"></li>
+            <li><img src="images/5.jpg" alt=""  style="width: 500px;height: 200px;"></li>
+        </ul>
+        <ol  id="dian">
+            <li  class="now">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+    <div  id="arr">
+        <div class="pre"></div>
+        <div class="next"></div>
+    </div>
+</div>
+<script  src="../animate.js"></script>
+<script>
+    var  timer=null;
+    var  box=document.getElementById('box');
+    var  screen=document.getElementById('screen');
+    var   ul=document.getElementById('yi');
+    var  ulLis=ul.children;
+    var  ol=document.getElementById('dian');
+    var  olLis=ol.children;
+    var arr = document.getElementById("arr");
+    var zy=arr.children;
+    var juli=0;
+    var imgWidth=screen.offsetWidth;
+
+//    console.log(screen);
+//    console.log(ul);
+//    console.log(ulLis);
+//    console.log(olLis);
+//    console.log(arr);
+//    console.log(zx);
+   var  pic=0;   //记录当前显示的图片的索引
+    var square=0;   //记录当前亮起的按钮的索引
+    var target = 0;
+
+    zy[1].onclick=function(){
+        if(pic===ulLis.length-1){
+            ul.style.left=0;
+            pic=0;
+        }
+        else{
+            pic++;
+            target=-pic*imgWidth;
+            animate(ul,30,target);
+        }
+        if(square<olLis.length-1){
+            square++;
+        }
+        else{
+            square=0;
+        }
+        for (var i = 0; i < olLis.length; i++) {
+            olLis[i].className = "";
+        }
+        olLis[square].className = "now";
+    };
+    zy[0].onclick=function(){
+        if(pic===0){
+            ul.style.left=-(ulLis.length - 1) * imgWidth + "px";
+            pic = ulLis.length - 1;
+        }
+        else{
+            pic--;
+            target = -pic * imgWidth;
+            animate(ul, 30, target);
+        }
+        if (square > 0) {
+            square--;
+        }
+        else {
+            square = olLis.length - 1;
+        }
+        for (var i = 0; i < olLis.length; i++) {
+            olLis[i].className = "";
+        }
+        olLis[square].className = "now";
+    }
+
+
+
+</script>
+
+</body>
+</html>
